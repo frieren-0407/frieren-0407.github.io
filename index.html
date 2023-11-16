@@ -30,13 +30,13 @@
                 <input type="range" value="0" id="progress">
                 
                 <div class="controls">
-                    <div>
+                    <div onclick="playPrevious()">
                         <i class="fa-solid fa-backward-fast"></i>
                     </div>
                     <div onclick="playPause()">
                         <i class="fa-solid fa-play" id="ctrlIcon"></i>
                     </div>
-                    <div>
+                    <div onclick="playNext()">
                         <i class="fa-solid fa-forward-fast"></i>
                     </div>
                 </div>
@@ -75,6 +75,31 @@
                 ctrlIcon.classList.remove("fa-play");
                 ctrlIcon.classList.add("fa-pause");
             }
+            let playlist = [
+    { name: 'Chocolate Lemon', artist: 'Mitsukiyo', file: 'media/Chocolate Lemon (1).mp3' },
+    { name: 'Nights', artist: 'Masayoshi Takanaka', file: 'media/Nights.mp3' },
+    //{ name: 'Tên bài hát', artist: 'Tên nghệ sĩ', file: 'đường_dẫn_đến_file.mp3' }
+];
+let currIndex = 0;
+
+function playNext() {
+    currIndex = (currIndex + 1) % playlist.length;
+    changeTrack(currIndex);
+}
+
+function playPrevious() {
+    currIndex = (currIndex - 1 + playlist.length) % playlist.length;
+    changeTrack(currIndex);
+}
+
+function changeTrack(index) {
+    song.src = playlist[index].file;
+    document.querySelector('h1').innerText = playlist[index].name;
+    document.querySelector('p').innerText = playlist[index].artist;
+    song.load(); // Tải lại bài hát mới
+    playPause(); // Phát bài hát mới sau khi chuyển
+}
+
         </script>
     </body>
     
