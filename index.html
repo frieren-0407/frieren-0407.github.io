@@ -105,7 +105,6 @@ document.querySelector('h1').innerText = playlist[index].name;
 document.querySelector('p').innerText = playlist[index].artist;
 song.load(); // Tải lại bài hát mới
 
-// Nếu bài hát đang chạy, không cần gọi playPause() để tránh dừng bài hát
 if (isPlaying) {
     song.play();
 }
