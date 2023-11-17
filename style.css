@@ -99,3 +99,16 @@ nav .circle{
     background: #f53192;
     color: #fff;
 }
+@keyframes rotate-disc {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.rotating-disc {
+    animation: rotate-disc 5s linear infinite;
+}
+
