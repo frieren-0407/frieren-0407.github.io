@@ -48,10 +48,17 @@
             let song = document.getElementById("song");
             let ctrlIcon = document.getElementById("ctrlIcon");
             
-            song.onloadedmetadata = function(){
-                progress.max = song.duration;
-                progress.value = song.currentTime;
-            }
+            song.onloadedmetadata = function() {
+    progress.max = song.duration || Infinity; // Thiết lập duration, nếu không có thì sử dụng Infinity
+    progress.value = song.currentTime;
+    song.onended = function() {
+        playNext(); // Chuyển sang bài hát tiếp theo khi bài hát kết thúc
+    };
+};
+
+song.oncanplaythrough = function() {
+    song.play(); // Bắt đầu phát bài hát sau khi có thể play thông qua hết
+};
             
             function playPause(){
                 if(ctrlIcon.classList.contains("fa-pause")){
@@ -106,9 +113,12 @@ document.querySelector('h1').innerText = playlist[index].name;
 document.querySelector('p').innerText = playlist[index].artist;
 song.load(); // Tải lại bài hát mới
 
-if (isPlaying) {
-    song.play();
-}
+song.onended = function() {
+        playNext(); // Chuyển sang bài hát tiếp theo khi bài hát kết thúc
+    };
+
+    song.play(); // Phát bài hát mới
+
 }
 
 function rotateImage(element) {
