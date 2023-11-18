@@ -13,7 +13,7 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    background-image: url(https://r4.wallpaperflare.com/wallpaper/291/819/697/illustration-city-anime-painting-wallpaper-13f4d2d68139f5ef0b47c1ea2a545254.jpg);
+    background-image: url(https://images.unsplash.com/photo-1546872006-43d8f499a0e1?q=80&w=2674&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
     background-size: cover;
 }
 .music-player{
@@ -37,15 +37,15 @@ nav .circle{
     height: 40px;
     line-height: 40px;
     background: #fff;
-    color: #f53192;
-    box-shadow: 0 5px 10px rgba(255, 26, 26, 0.22);
-
+    color: #000000;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.22);
+    border: hidden;
 }
 .cover{
     width: 220px;
     border-radius: 50%;
     border: 8px solid #fff;
-    box-shadow: 0 10px 60px rgba(255, 26, 26, 0.22);
+    box-shadow: 0 10px 60px rgba(0, 0, 0, 0.22);
 }
 .music-player h1{
     font-size: 20px;
@@ -61,19 +61,19 @@ nav .circle{
     -webkit-appearance: none;
     width: 100%;
     height: 6px;
-    background: #f53192;
+    background: #000000;
     border-radius: 4px;
     cursor: pointer;
     margin: 40px 0;
 }
 #progress::-webkit-slider-thumb{
     -webkit-appearance: none;
-    background: #f53192;
+    background: #000000;
     width: 30px;
     height: 30px;
     border-radius: 50%;
     border: 8px solid #fff;
-    box-shadow: 0 5px 5px rgba(255, 26, 26, 0.22);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.22);
 }
 .controls{
     display: flex;
@@ -90,13 +90,13 @@ nav .circle{
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    color: #f53192;
-    box-shadow: 0 10px 20px rgba(255, 26, 26, 0.22);
+    color: #000000;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.22);
     cursor: pointer;
 }
 .controls div:nth-child(2){
     transform: scale(1.5);
-    background: #f53192;
+    background: #000000;
     color: #fff;
 }
 @keyframes rotate-disc {
@@ -111,4 +111,29 @@ nav .circle{
 .rotating-disc {
     animation: rotate-disc 5s linear infinite;
 }
+.playlist-container {
 
+    list-style: none;
+    width: 400px;
+    height: fit-content;
+    padding: 10px;
+    margin: 20px;
+    background:rgba(255, 255, 255, 0.7);
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.playlist-title {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.playlist li {
+    list-style: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    margin-bottom: 8px;
+}

@@ -13,9 +13,9 @@
                     <div class="circle">
                         <i class="fa-solid fa-angle-left"></i>
                     </div>
-                    <div class="circle">
+                    <button class="circle">
                         <i class="fa-solid fa-bars-staggered"></i>
-                    </div>
+                    </button>
                 </nav>
                         <img src="media/bg2.jpg" class="cover" id="Disc">
 
@@ -42,6 +42,13 @@
                     </div>
                 </div>
             </div>
+            <div class="playlist-container" style="display: none;">
+                <h2 class="playlist-title">Playlist</h2>
+                <ul class="playlist">
+                    
+                </ul>
+            </div>
+            
         </div>
         <script>
             let progress = document.getElementById("progress");
@@ -85,6 +92,8 @@ song.oncanplaythrough = function() {
                 ctrlIcon.classList.remove("fa-play");
                 ctrlIcon.classList.add("fa-pause");
             }
+            const playlistElement = document.querySelector('.playlist');
+        
             let playlist = [
     { name: 'Chocolate Lemon', artist: 'Mitsukiyo', file: 'media/Chocolate Lemon (1).mp3' },
     { name: 'Nights', artist: 'Masayoshi Takanaka', file: 'media/Nights.mp3' },
@@ -94,9 +103,18 @@ song.oncanplaythrough = function() {
     { name: 'Someday my prince will come', artist: 'Bill Evans', file: 'media/Someday my prince will come.mp3'},
     { name: 'The girl from Ipanema', artist: 'Antônio Carlos Jobim', file: 'media/The girl from Ipanema.mp3'},
     { name: 'Alice In Wonderland', artist: 'Bill Evan', file: 'media/Alice In Wonderland.mp3'},
-    { name: 'Beleza Pura', artist: 'Masayoshi Takanaka', file: 'media/Beleza Pura.mp3'}
-
-];
+    { name: 'Beleza Pura', artist: 'Masayoshi Takanaka', file: 'media/Beleza Pura.mp3'},
+    { name: 'おはようまたあした', artist: 'Ho-Kago Tea Time', file: 'media/おはようまたあした.mp3'},
+    { name: 'Galactic Funk - Live at The Ryogoku Kokugikan Tokyo April 1985', artist: 'Casiopeia', file: 'media/Galactic Funk - Live at The Ryogoku Kokugikan Tokyo April 1985.mp3'},
+    { name: 'Medley', artist: 'Kaoru & Sentaro Duo', file: 'media/BUNKASAI Medley.mp3'},
+    { name: 'Sakamichi no Apollon OST - But not for me', artist: 'Yoko Kanno (Junichi Perform)', file: 'media/But not for me (Sakamichi No Apollon OST).mp3'}
+]
+    playlist.forEach(song => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${song.name} - ${song.artist}`;
+    playlistElement.appendChild(listItem);
+});
+;
 let currIndex = 0;
 
 function playNext() {
@@ -129,7 +147,33 @@ song.onended = function() {
 function rotateImage(element) {
 element.classList.toggle("active");
 }
+const barsStaggered = document.querySelector('.fa-bars-staggered');
+const playlistContainer = document.querySelector('.playlist-container');
 
+barsStaggered.addEventListener('click', function() {
+    if (playlistContainer.style.display === 'none' || playlistContainer.style.display === '') {
+        playlistContainer.style.display = 'block';
+    } else {
+        playlistContainer.style.display = 'none';
+    }
+});
+document.addEventListener("DOMContentLoaded", function() {
+    const playlistElement = document.querySelector('.playlist');
+    const playlistTitle = document.querySelector('.playlist-title');
+
+    // Kiểm tra nếu playlist chưa được in ra trước đó
+    if (!isPlaylistRendered) {
+        // Thêm các phần tử playlist vào DOM
+        playlist.forEach(song => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${song.name} - ${song.artist}`;
+            playlistElement.appendChild(listItem);
+        });
+
+        // Đặt cờ cho biết playlist đã được in ra
+        isPlaylistRendered = true;
+    }
+});
 
         </script>
     </body>
