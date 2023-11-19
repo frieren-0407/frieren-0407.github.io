@@ -12,7 +12,9 @@
             <div class="music-player">
                 <nav>
                     <div class="circle">
-                        <i class="fa-solid fa-angle-left"></i>
+                        <i class="fa-solid fa-shuffle"></i>
+                        <i class="fa-solid fa-rotate"></i>
+                        
                     </div>
                     <button class="circle">
                         <i class="fa-solid fa-bars-staggered"></i>
@@ -103,7 +105,6 @@ song.oncanplaythrough = function() {
     { name: 'Corcovado', artist: 'Stan Getz', file: 'media/Corcovado.mp3'},
     { name: 'Someday my prince will come', artist: 'Bill Evans', file: 'media/Someday my prince will come.mp3'},
     { name: 'The girl from Ipanema', artist: 'Antônio Carlos Jobim', file: 'media/The girl from Ipanema.mp3'},
-    { name: 'Alice In Wonderland', artist: 'Bill Evan', file: 'media/Alice In Wonderland.mp3'},
     { name: 'Beleza Pura', artist: 'Masayoshi Takanaka', file: 'media/Beleza Pura.mp3'},
     { name: 'おはようまたあした', artist: 'Ho-Kago Tea Time', file: 'media/おはようまたあした.mp3'},
     { name: 'Galactic Funk - Live at The Ryogoku Kokugikan Tokyo April 1985', artist: 'Casiopeia', file: 'media/Galactic Funk - Live at The Ryogoku Kokugikan Tokyo April 1985.mp3'},
@@ -111,9 +112,7 @@ song.oncanplaythrough = function() {
     { name: 'Sakamichi no Apollon OST - But not for me', artist: 'Yoko Kanno (Junichi Perform)', file: 'media/But not for me (Sakamichi No Apollon OST).mp3'},
     { name: 'Machi No Dorufin', artist: 'Kingo Hamada', file: 'media/Machi No Dorufin.mp3'},
     { name: 'Roi nhu da ngay ngo', artist: 'Hong Nhung & Hoai Sa', file: 'media/Roi nhu da ngay ngo.mp3'},
-    { name: 'Ao Lua Ha Dong (Live)', artist: 'Tuan Ngoc', file: 'media/Aó Lụa Hà Đông (Live).mp3'},
-    { name: 'Moanin', artist: 'Art Blakey', file: 'media/Moanin.mp3'}
-
+    { name: 'Todome no ichigeki (feat. Cory Wong)', artist: 'Vaundy', file: 'media/Todome no ichigeki (feat. Cory Wong).mp3'}
 ]
     playlist.forEach(song => {
     const listItem = document.createElement('li');

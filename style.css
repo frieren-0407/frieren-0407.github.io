@@ -13,8 +13,9 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    background-image: url(https://images.unsplash.com/photo-1546872006-43d8f499a0e1?q=80&w=2674&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+    background-image: url(https://wallpapercave.com/wp/wp11082449.jpg);
     background-size: cover;
+    background-position: center;
 }
 .music-player{
     width: 400px;
