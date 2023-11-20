@@ -12,9 +12,7 @@
             <div class="music-player">
                 <nav>
                     <div class="circle">
-                        <i class="fa-solid fa-shuffle"></i>
-                        <i class="fa-solid fa-rotate"></i>
-                        
+                        <i class="fa-solid fa-shuffle" style="color: #97a0af;"></i>
                     </div>
                     <button class="circle">
                         <i class="fa-solid fa-bars-staggered"></i>
@@ -38,7 +36,7 @@
                         <i class="fa-solid fa-backward-fast"></i>
                     </div>
                     <div onclick="playPause()">
-                        <i class="fa-solid fa-play" id="ctrlIcon"></i>
+                        <i class="fa-solid fa-pause" id="ctrlIcon"></i>
                     </div>
                     <div onclick="playNext()">
                         <i class="fa-solid fa-forward-fast"></i>
@@ -54,6 +52,10 @@
             
         </div>
         <script>
+            let currIndex = 0;
+let isShuffleOn = false;
+let isPlaylistRendered = false;
+
             let progress = document.getElementById("progress");
             let song = document.getElementById("song");
             let ctrlIcon = document.getElementById("ctrlIcon");
@@ -70,20 +72,22 @@ song.oncanplaythrough = function() {
     song.play(); // Bắt đầu phát bài hát sau khi có thể play thông qua hết
 };
             
-            function playPause(){
-                if(ctrlIcon.classList.contains("fa-pause")){
-                    song.pause();
-                    ctrlIcon.classList.remove("fa-pause");
-                    ctrlIcon.classList.add("fa-play");
-                    document.getElementById("Disc").classList.remove("rotating-disc");
-                }
-                else{
-                    song.play();
-                    ctrlIcon.classList.remove("fa-play");
-                    ctrlIcon.classList.add("fa-pause");
-                    document.getElementById("Disc").classList.add("rotating-disc");
-                }
-            }
+function playPause(){
+    if(song.paused){
+        song.play();
+        ctrlIcon.classList.remove("fa-play");
+        ctrlIcon.classList.add("fa-pause");
+        document.getElementById("Disc").classList.add("rotating-disc");
+    }
+    else{
+        song.pause();
+        ctrlIcon.classList.add("fa-play");
+        ctrlIcon.classList.remove("fa-pause");
+
+        document.getElementById("Disc").classList.remove("rotating-disc");
+    }
+}
+
             if(song.play()){
                 setInterval(()=>{
                     progress.value = song.currentTime;
@@ -120,34 +124,23 @@ song.oncanplaythrough = function() {
     playlistElement.appendChild(listItem);
 });
 ;
-let currIndex = 0;
 
-function playNext() {
-    currIndex = (currIndex + 1) % playlist.length;
-    changeTrack(currIndex);
-}
-
-function playPrevious() {
-    currIndex = (currIndex - 1 + playlist.length) % playlist.length;
-    changeTrack(currIndex);
-}
 
 function changeTrack(index) {
-// Kiểm tra nếu bài hát đang chạy
-const isPlaying = !song.paused;
+    currIndex = index; // Cập nhật chỉ số của bài hát hiện tại
 
-song.src = playlist[index].file;
-document.querySelector('h1').innerText = playlist[index].name;
-document.querySelector('p').innerText = playlist[index].artist;
-song.load(); // Tải lại bài hát mới
+    song.src = playlist[index].file;
+    document.querySelector('h1').innerText = playlist[index].name;
+    document.querySelector('p').innerText = playlist[index].artist;
+    song.load();
 
-song.onended = function() {
-        playNext(); // Chuyển sang bài hát tiếp theo khi bài hát kết thúc
+    song.onended = function () {
+        playNext();
     };
 
-    song.play(); // Phát bài hát mới
-
+    song.play();
 }
+
 
 function rotateImage(element) {
 element.classList.toggle("active");
@@ -162,18 +155,64 @@ barsStaggered.addEventListener('click', function() {
         playlistContainer.style.display = 'none';
     }
 });
+
+
+// Hàm để bật/tắt chế độ trộn bài hát
+function toggleShuffle() {
+    const shuffleIcons = document.querySelectorAll('.fa-shuffle');
+
+    if (isShuffleOn) {
+        isShuffleOn = false;
+        shuffleIcons.forEach(icon => {
+            icon.style.color = '#97a0af';
+        });
+    } else {
+        isShuffleOn = true;
+        shuffleIcons.forEach(icon => {
+            icon.style.color = '#000000'; // Màu tùy chỉnh khi bật trộn bài
+        });
+    }
+}
+
+// Gán hàm toggleShuffle cho sự kiện click của nút trộn bài hát
+const shuffleButton = document.querySelector('.fa-shuffle');
+shuffleButton.addEventListener('click', toggleShuffle);
+
+// Hàm thực hiện chuyển bài hát tiếp theo
+function playNext() {
+    let newIndex;
+    if (isShuffleOn) {
+        newIndex = Math.floor(Math.random() * playlist.length); // Lấy một bài hát ngẫu nhiên từ playlist
+    } else {
+        newIndex = (currIndex + 1) % playlist.length; // Chuyển sang bài hát tiếp theo trong playlist
+    }
+    changeTrack(newIndex);
+}
+
+// Hàm thực hiện chuyển bài hát trước đó
+function playPrevious() {
+    let newIndex;
+    if (isShuffleOn) {
+        newIndex = Math.floor(Math.random() * playlist.length); // Lấy một bài hát ngẫu nhiên từ playlist
+    } else {
+        newIndex = (currIndex - 1 + playlist.length) % playlist.length; // Chuyển sang bài hát trước đó trong playlist
+    }
+    changeTrack(newIndex);
+}
 document.addEventListener("DOMContentLoaded", function() {
     const playlistElement = document.querySelector('.playlist');
     const playlistTitle = document.querySelector('.playlist-title');
 
     // Kiểm tra nếu playlist chưa được in ra trước đó
     if (!isPlaylistRendered) {
-        // Thêm các phần tử playlist vào DOM
-        playlist.forEach(song => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${song.name} - ${song.artist}`;
-            playlistElement.appendChild(listItem);
-        });
+        // Thêm các phần tử playlist vào DOM nếu playlist trống
+        if (playlistElement.children.length === 0) {
+            playlist.forEach(song => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${song.name} - ${song.artist}`;
+                playlistElement.appendChild(listItem);
+            });
+        }
 
         // Đặt cờ cho biết playlist đã được in ra
         isPlaylistRendered = true;
