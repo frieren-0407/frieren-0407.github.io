@@ -11,12 +11,16 @@
         <div class="container">
             <div class="music-player">
                 <nav>
-                    <div class="circle">
-                        <i class="fa-solid fa-shuffle" style="color: #97a0af;"></i>
+                    <div class="circle" id="shuffle">
+                        <i class="fa-solid fa-shuffle" style="color: #97a0af;" ></i>
                     </div>
-                    <button class="circle">
-                        <i class="fa-solid fa-bars-staggered"></i>
+                    <button class="circle" id="list">
+                        <i class="fa-solid fa-bars-staggered" style="color: #97a0af;" id="listIcon"></i>
                     </button>
+                    <button class="circle" onclick="replay()" id="replay">
+                        <i class="fa-solid fa-arrow-rotate-left" style="color: #97a0af;" id="replayIcon"></i>
+                    </button>
+                   
                 </nav>
                         <img src="media/bg2.jpg" class="cover" id="Disc">
 
@@ -71,7 +75,27 @@ let isPlaylistRendered = false;
 song.oncanplaythrough = function() {
     song.play(); // Bắt đầu phát bài hát sau khi có thể play thông qua hết
 };
-            
+let isReplay = false;
+function replay() {
+    const replayicon = document.querySelectorAll('.fa-arrow-rotate-left');
+
+    isReplay = !isReplay;
+    if (isReplay) {
+        song.loop = true;
+        document.getElementById("replay").classList.add("active");
+        replayicon.forEach(icon => {
+            icon.style.color = '#000000';
+        });
+        
+    } else {
+        song.loop = false;
+        document.getElementById("replay").classList.remove("active");
+        replayicon.forEach(icon => {
+            icon.style.color = '#97a0af';
+        });
+    }
+}
+
 function playPause(){
     if(song.paused){
         song.play();
@@ -145,6 +169,7 @@ function changeTrack(index) {
 }
 
 
+
 function rotateImage(element) {
 element.classList.toggle("active");
 }
@@ -205,9 +230,9 @@ function playPrevious() {
 document.addEventListener("DOMContentLoaded", function() {
     const playlistElement = document.querySelector('.playlist');
     const playlistTitle = document.querySelector('.playlist-title');
-
+    const listicon = document.querySelector('.fa-bars-staggered');
     // Kiểm tra nếu playlist chưa được in ra trước đó
-    if (!isPlaylistRendered) {
+    if (isPlaylistRendered) {
         // Thêm các phần tử playlist vào DOM nếu playlist trống
         if (playlistElement.children.length === 0) {
             playlist.forEach(song => {
@@ -215,14 +240,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 listItem.textContent = `${song.name} - ${song.artist}`;
                 playlistElement.appendChild(listItem);
             });
+            
         }
 
         // Đặt cờ cho biết playlist đã được in ra
-        isPlaylistRendered = true;
+        isPlaylistRendered = false;
     }
 });
-
-        </script>
+      
+    </script>
     </body>
     
 </html>

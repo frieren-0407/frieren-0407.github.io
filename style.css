@@ -142,3 +142,33 @@ nav .circle{
     font-size: 16px;
     margin-bottom: 8px;
 }
+
+#replay{
+    box-shadow: 0 10px 20px rgba(166,97,60, 0.8);
+    cursor: pointer;
+}
+
+/* Màu mặc định của icon */
+#listIcon,
+#replayIcon {
+    color: #97a0af; /* Màu gốc */
+}
+
+/* Khi nút được nhấn */
+.active-icon {
+    color: #000000; /* Màu khi được nhấn */
+}
+#shuffle{
+    cursor: pointer;
+}
+#list{
+    cursor: pointer;
+}
+.active-list .fa-bars-staggered {
+    color: #FF5733; /* Thay đổi màu khi được kích hoạt */
+}
+
+/* CSS cho nút replay */
+.active-replay .fa-arrow-rotate-left {
+    color: #33FF57; /* Thay đổi màu khi được kích hoạt */
+}
