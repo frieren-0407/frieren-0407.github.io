@@ -2,8 +2,8 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Only for Chill</title>
-        <link rel="shortcut icon" type="page-icon" href="media/bg2.jpg">
+        <title>for morning...</title>
+        <link rel="shortcut icon" type="page-icon" href="media/icon.png">
         <link rel="stylesheet" href="style.css">
         <script src="https://kit.fontawesome.com/ca262bb4da.js" crossorigin="anonymous"></script>
     </head>
@@ -135,7 +135,6 @@ function playPause(){
     { name: 'The Girl From Ipanema', artist: 'Antônio Carlos Jobim', file: 'media/The girl from Ipanema.mp3'},
     { name: 'Beleza Pura', artist: 'Masayoshi Takanaka', file: 'media/Beleza Pura.mp3'},
     { name: 'おはようまたあした', artist: 'Ho-Kago Tea Time', file: 'media/おはようまたあした.mp3'},
-    { name: 'Galactic Funk - Live at The Ryogoku Kokugikan Tokyo April 1985', artist: 'Casiopeia', file: 'media/Galactic Funk - Live at The Ryogoku Kokugikan Tokyo April 1985.mp3'},
     { name: 'Medley', artist: 'Kaoru & Sentaro Duo', file: 'media/BUNKASAI Medley.mp3'},
     { name: 'Sakamichi no Apollon OST - But not for me', artist: 'Yoko Kanno (Junichi Perform)', file: 'media/But not for me (Sakamichi No Apollon OST).mp3'},
     { name: 'Machi No Dorufin', artist: 'Kingo Hamada', file: 'media/Machi No Dorufin.mp3'},
@@ -144,9 +143,6 @@ function playPause(){
     { name: 'I Really Want To Stay At Your House (80s Synthwave Remix)', artist: 'BonnieFox Cover & 蓝云木 Remix', file: 'media/I Really Want To Stay At Your House - 80s Synthwave Remix.mp3'},
     { name: 'Goodbye', artist: 'Toe', file: 'media/Goodbye.mp3'},
     { name: 'A Barista, a Piano and Jazz (Key Ab Ver)', artist: 'Starlight Grass Tune', file: 'media/A Barista, a Piano and Jazz (Key Ab Ver).mp3'},
-    { name: 'i will see you again', artist: 'League Of Legend, suteki', file: 'media/i will see you again.mp3'},
-    { name: '夜を待つよ', artist: 'Midnight Grand Orchestra', file: 'media/夜を待つよ.mp3'},
-    { name: 'Aoharu - ReAoharu Arrange ver.', artist: 'NezMayo', file: 'media/Aoharu - ReAoharu Arrange ver..mp3'}
 ]
     playlist.forEach(song => {
     const listItem = document.createElement('li');
@@ -155,10 +151,8 @@ function playPause(){
 });
 ;
 
-
 function changeTrack(index) {
     currIndex = index; // Cập nhật chỉ số của bài hát hiện tại
-
     song.src = playlist[index].file;
     document.querySelector('h1').innerText = playlist[index].name;
     document.querySelector('p').innerText = playlist[index].artist;
@@ -171,14 +165,12 @@ function changeTrack(index) {
     song.play();
 }
 
-
-
 function rotateImage(element) {
 element.classList.toggle("active");
 }
+
 const barsStaggered = document.querySelector('.fa-bars-staggered');
 const playlistContainer = document.querySelector('.playlist-container');
-
 barsStaggered.addEventListener('click', function() {
     if (playlistContainer.style.display === 'none' || playlistContainer.style.display === '') {
         playlistContainer.style.display = 'block';
@@ -186,8 +178,6 @@ barsStaggered.addEventListener('click', function() {
         playlistContainer.style.display = 'none';
     }
 });
-
-
 // Hàm để bật/tắt chế độ trộn bài hát
 function toggleShuffle() {
     const shuffleIcons = document.querySelectorAll('.fa-shuffle');
@@ -204,11 +194,9 @@ function toggleShuffle() {
         });
     }
 }
-
 // Gán hàm toggleShuffle cho sự kiện click của nút trộn bài hát
 const shuffleButton = document.querySelector('.fa-shuffle');
 shuffleButton.addEventListener('click', toggleShuffle);
-
 // Hàm thực hiện chuyển bài hát tiếp theo
 function playNext() {
     let newIndex;
@@ -219,7 +207,6 @@ function playNext() {
     }
     changeTrack(newIndex);
 }
-
 // Hàm thực hiện chuyển bài hát trước đó
 function playPrevious() {
     let newIndex;
@@ -245,12 +232,10 @@ document.addEventListener("DOMContentLoaded", function() {
             });
             
         }
-
         // Đặt cờ cho biết playlist đã được in ra
         isPlaylistRendered = false;
     }
 });
-      
     </script>
     </body>
 </html>
