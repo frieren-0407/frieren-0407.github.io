@@ -33,6 +33,10 @@
                 <audio id="song">
                     <source src="media/Chocolate Lemon (1).mp3" type="audio/mpeg">
                 </audio>
+                <div class="duration">
+                    <span id="current-time">0:00</span>
+                    <span id="total-time">0:00</span>
+                </div>
                 <input type="range" value="0" id="progress">
                 
                 <div class="controls">
@@ -56,6 +60,30 @@
             
         </div>
         <script>
+                    song.ontimeupdate = function () {
+            progress.max = song.duration || Infinity; 
+            document.getElementById("total-time").innerText = Math.floor(song.duration / 60) + ":" + Math.floor(song.duration - Math.floor(song.duration / 60) * 60);
+            progress.value = song.currentTime;
+            let minutes = Math.floor(song.currentTime / 60);
+            let seconds = Math.floor(song.currentTime - minutes * 60);
+            let minuteValue;
+            let secondValue;
+
+            if (minutes < 10) {
+                minuteValue = "0" + minutes;
+            } else {
+                minuteValue = minutes;
+            }
+
+            if (seconds < 10) {
+                secondValue = "0" + seconds;
+            } else {
+                secondValue = seconds;
+            }
+
+            let mediaTime = minuteValue + ":" + secondValue;
+            document.getElementById("current-time").innerText = mediaTime;
+        };
             let currIndex = 0;
 let isShuffleOn = false;
 let isPlaylistRendered = false;
