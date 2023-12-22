@@ -60,7 +60,15 @@
             
         </div>
         <script>
-                    song.ontimeupdate = function () {
+                   
+            let currIndex = 0;
+let isShuffleOn = false;
+let isPlaylistRendered = false;
+
+            let progress = document.getElementById("progress");
+            let song = document.getElementById("song");
+            let ctrlIcon = document.getElementById("ctrlIcon");
+            song.ontimeupdate = function () {
             progress.max = song.duration || Infinity; 
             document.getElementById("total-time").innerText = Math.floor(song.duration / 60) + ":" + Math.floor(song.duration - Math.floor(song.duration / 60) * 60);
             progress.value = song.currentTime;
@@ -84,14 +92,6 @@
             let mediaTime = minuteValue + ":" + secondValue;
             document.getElementById("current-time").innerText = mediaTime;
         };
-            let currIndex = 0;
-let isShuffleOn = false;
-let isPlaylistRendered = false;
-
-            let progress = document.getElementById("progress");
-            let song = document.getElementById("song");
-            let ctrlIcon = document.getElementById("ctrlIcon");
-            
             song.onloadedmetadata = function() {
     progress.max = song.duration || Infinity; // Thiết lập duration, nếu không có thì sử dụng Infinity
     progress.value = song.currentTime;

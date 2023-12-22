@@ -169,3 +169,21 @@ nav .circle{
 .active-replay .fa-arrow-rotate-left {
     color: #33FF57; /* Thay đổi màu khi được kích hoạt */
 }
+.duration {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    color: #333;
+    padding: 10px;
+}
+#current-time{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    color: #333;
+    padding: 55px;
+}
+#total-time{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    color: #333;
+    padding: 55px;
+}
