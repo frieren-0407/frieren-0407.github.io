@@ -1,75 +1,76 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>for morning...</title>
-        <link rel="shortcut icon" type="page-icon" href="media/icon.png">
-        <link rel="stylesheet" href="style.css">
-        <script src="https://kit.fontawesome.com/ca262bb4da.js" crossorigin="anonymous"></script>
-    </head>
-    <body>
-        <div class="container">
-            <div class="music-player">
-                <nav>
-                    <div class="circle" id="shuffle">
-                        <i class="fa-solid fa-shuffle" style="color: #97a0af;" ></i>
-                    </div>
-                    <button class="circle" id="list">
-                        <i class="fa-solid fa-bars-staggered" style="color: #97a0af;" id="listIcon"></i>
-                    </button>
-                    <button class="circle" onclick="replay()" id="replay">
-                        <i class="fa-solid fa-arrow-rotate-left" style="color: #97a0af;" id="replayIcon"></i>
-                    </button>
-                   
-                </nav>
-                        <img src="media/bg2.jpg" class="cover" id="Disc">
 
-                <h1>
-                    Chocolate Lemon
-                </h1>
-                <p>
-                    Mitsukiyo
-                </p>
-                <audio id="song">
-                    <source src="media/Chocolate Lemon (1).mp3" type="audio/mpeg">
-                </audio>
-                <div class="duration">
-                    <span id="current-time">0:00</span>
-                    <span id="total-time">0:00</span>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>for morning...</title>
+    <link rel="shortcut icon" type="page-icon" href="media/icon.png">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/ca262bb4da.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="music-player">
+            <nav>
+                <button class="circle" id="shuffle">
+                    <i class="fa-solid fa-shuffle" style="color: #97a0af;"></i>
+                </button>
+                <button class="circle" id="list">
+                    <i class="fa-solid fa-bars-staggered" style="color: #97a0af;" id="listIcon"></i>
+                </button>
+                <button class="circle" onclick="replay()" id="replay">
+                    <i class="fa-solid fa-arrow-rotate-left" style="color: #97a0af;" id="replayIcon"></i>
+                </button>
+
+            </nav>
+            <img src="media/bg2.jpg" class="cover" id="Disc">
+            <h1>
+                Chocolate Lemon
+            </h1>
+            <p>
+                Mitsukiyo
+            </p>
+            <audio id="song">
+                <source src="media/Chocolate Lemon (1).mp3" type="audio/mpeg">
+            </audio>
+            <div class="duration">
+                <span id="current-time">0:00</span>
+                <span id="total-time">0:00</span>
+            </div>
+            <input type="range" value="0" id="progress">
+
+            <div class="controls">
+                <div onclick="playPrevious()">
+                    <i class="fa-solid fa-backward-fast"></i>
                 </div>
-                <input type="range" value="0" id="progress">
-                
-                <div class="controls">
-                    <div onclick="playPrevious()">
-                        <i class="fa-solid fa-backward-fast"></i>
-                    </div>
-                    <div onclick="playPause()">
-                        <i class="fa-solid fa-pause" id="ctrlIcon"></i>
-                    </div>
-                    <div onclick="playNext()">
-                        <i class="fa-solid fa-forward-fast"></i>
-                    </div>
+                <div onclick="playPause()">
+                    <i class="fa-solid fa-pause" id="ctrlIcon"></i>
+                </div>
+                <div onclick="playNext()">
+                    <i class="fa-solid fa-forward-fast"></i>
                 </div>
             </div>
-            <div class="playlist-container" style="display: none;">
-                <h2 class="playlist-title">Playlist</h2>
-                <ul class="playlist">
-                    
-                </ul>
-            </div>
-            
         </div>
-        <script>
-                   
-            let currIndex = 0;
-let isShuffleOn = false;
-let isPlaylistRendered = false;
+        <div class="playlist-container" style="display: none;">
+            <h2 class="playlist-title">Playlist</h2>
+            <ul class="playlist">
 
-            let progress = document.getElementById("progress");
-            let song = document.getElementById("song");
-            let ctrlIcon = document.getElementById("ctrlIcon");
-            song.ontimeupdate = function () {
-            progress.max = song.duration || Infinity; 
+            </ul>
+        </div>
+
+    </div>
+    <script>
+
+        let currIndex = 0;
+        let isShuffleOn = false;
+        let isPlaylistRendered = false;
+
+        let progress = document.getElementById("progress");
+        let song = document.getElementById("song");
+        let ctrlIcon = document.getElementById("ctrlIcon");
+        song.ontimeupdate = function () {
+            progress.max = song.duration || Infinity;
             document.getElementById("total-time").innerText = Math.floor(song.duration / 60) + ":" + Math.floor(song.duration - Math.floor(song.duration / 60) * 60);
             progress.value = song.currentTime;
             let minutes = Math.floor(song.currentTime / 60);
@@ -92,178 +93,204 @@ let isPlaylistRendered = false;
             let mediaTime = minuteValue + ":" + secondValue;
             document.getElementById("current-time").innerText = mediaTime;
         };
-            song.onloadedmetadata = function() {
-    progress.max = song.duration || Infinity; // Thiết lập duration, nếu không có thì sử dụng Infinity
-    progress.value = song.currentTime;
-    song.onended = function() {
-        playNext(); // Chuyển sang bài hát tiếp theo khi bài hát kết thúc
-    };
-};
+        song.onloadedmetadata = function () {
+            progress.max = song.duration || Infinity; // Thiết lập duration, nếu không có thì sử dụng Infinity
+            progress.value = song.currentTime;
+            song.onended = function () {
+                playNext(); // Chuyển sang bài hát tiếp theo khi bài hát kết thúc
+            };
+        };
 
-song.oncanplaythrough = function() {
-    song.play(); // Bắt đầu phát bài hát sau khi có thể play thông qua hết
-};
-let isReplay = false;
-function replay() {
-    const replayicon = document.querySelectorAll('.fa-arrow-rotate-left');
+        song.oncanplaythrough = function () {
+            song.play(); // Bắt đầu phát bài hát sau khi có thể play thông qua hết
+        };
+        let isReplay = false;
+        function replay() {
+            const replayicon = document.querySelectorAll('.fa-arrow-rotate-left');
 
-    isReplay = !isReplay;
-    if (isReplay) {
-        song.loop = true;
-        document.getElementById("replay").classList.add("active");
-        replayicon.forEach(icon => {
-            icon.style.color = '#000000';
-        });
-        
-    } else {
-        song.loop = false;
-        document.getElementById("replay").classList.remove("active");
-        replayicon.forEach(icon => {
-            icon.style.color = '#97a0af';
-        });
-    }
-}
+            isReplay = !isReplay;
+            if (isReplay) {
+                song.loop = true;
+                document.getElementById("replay").classList.add("active");
+                replayicon.forEach(icon => {
+                    icon.style.color = '#000000';
+                });
 
-function playPause(){
-    if(song.paused){
-        song.play();
-        ctrlIcon.classList.remove("fa-play");
-        ctrlIcon.classList.add("fa-pause");
-        document.getElementById("Disc").classList.add("rotating-disc");
-    }
-    else{
-        song.pause();
-        ctrlIcon.classList.add("fa-play");
-        ctrlIcon.classList.remove("fa-pause");
-
-        document.getElementById("Disc").classList.remove("rotating-disc");
-    }
-}
-
-            if(song.play()){
-                setInterval(()=>{
-                    progress.value = song.currentTime;
-                },300)
+            } else {
+                song.loop = false;
+                document.getElementById("replay").classList.remove("active");
+                replayicon.forEach(icon => {
+                    icon.style.color = '#97a0af';
+                });
             }
-            progress.onchange = function(){
+        }
+
+        function playPause() {
+            if (song.paused) {
                 song.play();
-                song.currentTime = progress.value;
                 ctrlIcon.classList.remove("fa-play");
                 ctrlIcon.classList.add("fa-pause");
+                document.getElementById("Disc").classList.add("rotating-disc");
             }
-            const playlistElement = document.querySelector('.playlist');
-        
-            let playlist = [
-    { name: 'Chocolate Lemon', artist: 'Mitsukiyo', file: 'media/Chocolate Lemon (1).mp3' },
-    { name: 'Nights', artist: 'Masayoshi Takanaka', file: 'media/Nights.mp3' },
-    { name: 'Wave', artist: 'Antônio Carlos Jobim', file: 'media/Wave.mp3' },
-    { name: 'Tiny Little Adiantum', artist: '3L', file: 'media/Tiny Little Adiantum.mp3'},
-    { name: 'Corcovado', artist: 'Stan Getz', file: 'media/Corcovado.mp3'},
-    { name: 'Someday My Prince Will Come', artist: 'Bill Evans', file: 'media/Someday my prince will come.mp3'},
-    { name: 'The Girl From Ipanema', artist: 'Antônio Carlos Jobim', file: 'media/The girl from Ipanema.mp3'},
-    { name: 'Beleza Pura', artist: 'Masayoshi Takanaka', file: 'media/Beleza Pura.mp3'},
-    { name: 'おはようまたあした', artist: 'Ho-Kago Tea Time', file: 'media/おはようまたあした.mp3'},
-    { name: 'Medley', artist: 'Kaoru & Sentaro Duo', file: 'media/BUNKASAI Medley.mp3'},
-    { name: 'Sakamichi no Apollon OST - But not for me', artist: 'Yoko Kanno (Junichi Perform)', file: 'media/But not for me (Sakamichi No Apollon OST).mp3'},
-    { name: 'Machi No Dorufin', artist: 'Kingo Hamada', file: 'media/Machi No Dorufin.mp3'},
-    { name: 'Todome No Ichigeki (feat. Cory Wong)', artist: 'Vaundy', file: 'media/Todome no ichigeki (feat. Cory Wong).mp3'},
-    { name: 'Stay With Me', artist: 'Miki Matsubara', file: 'media/Stay With Me.mp3'},
-    { name: 'I Really Want To Stay At Your House (80s Synthwave Remix)', artist: 'BonnieFox Cover & 蓝云木 Remix', file: 'media/I Really Want To Stay At Your House - 80s Synthwave Remix.mp3'},
-    { name: 'Goodbye', artist: 'Toe', file: 'media/Goodbye.mp3'},
-    { name: 'A Barista, a Piano and Jazz (Key Ab Ver)', artist: 'Starlight Grass Tune', file: 'media/A Barista, a Piano and Jazz (Key Ab Ver).mp3'},
-]
-    playlist.forEach(song => {
-    const listItem = document.createElement('li');
-    listItem.textContent = `${song.name} - ${song.artist}`;
-    playlistElement.appendChild(listItem);
-});
-;
+            else {
+                song.pause();
+                ctrlIcon.classList.add("fa-play");
+                ctrlIcon.classList.remove("fa-pause");
 
-function changeTrack(index) {
-    currIndex = index; // Cập nhật chỉ số của bài hát hiện tại
+                document.getElementById("Disc").classList.remove("rotating-disc");
+            }
+        }
+
+        if (song.play()) {
+            setInterval(() => {
+                progress.value = song.currentTime;
+            }, 300)
+        }
+        progress.onchange = function () {
+            song.play();
+            song.currentTime = progress.value;
+            ctrlIcon.classList.remove("fa-play");
+            ctrlIcon.classList.add("fa-pause");
+        }
+        const playlistElement = document.querySelector('.playlist');
+
+        let playlist = [
+            { name: 'Chocolate Lemon', artist: 'Mitsukiyo', file: 'media/Chocolate Lemon (1).mp3' },
+            { name: 'Nights', artist: 'Masayoshi Takanaka', file: 'media/Nights.mp3' },
+            { name: 'Wave', artist: 'Antônio Carlos Jobim', file: 'media/Wave.mp3' },
+            { name: 'Tiny Little Adiantum', artist: '3L', file: 'media/Tiny Little Adiantum.mp3' },
+            { name: 'Corcovado', artist: 'Stan Getz', file: 'media/Corcovado.mp3' },
+            { name: 'Someday My Prince Will Come', artist: 'Bill Evans', file: 'media/Someday my prince will come.mp3' },
+            { name: 'The Girl From Ipanema', artist: 'Antônio Carlos Jobim', file: 'media/The girl from Ipanema.mp3' },
+            { name: 'Beleza Pura', artist: 'Masayoshi Takanaka', file: 'media/Beleza Pura.mp3' },
+            { name: 'おはようまたあした', artist: 'Ho-Kago Tea Time', file: 'media/おはようまたあした.mp3' },
+            { name: 'Medley', artist: 'Kaoru & Sentaro Duo', file: 'media/BUNKASAI Medley.mp3' },
+            { name: 'Sakamichi no Apollon OST - But not for me', artist: 'Yoko Kanno (Junichi Perform)', file: 'media/But not for me (Sakamichi No Apollon OST).mp3' },
+            { name: 'Machi No Dorufin', artist: 'Kingo Hamada', file: 'media/Machi No Dorufin.mp3' },
+            { name: 'Todome No Ichigeki (feat. Cory Wong)', artist: 'Vaundy', file: 'media/Todome no ichigeki (feat. Cory Wong).mp3' },
+            { name: 'A Barista, a Piano and Jazz (Key Ab Ver)', artist: 'Starlight Grass Tune', file: 'media/A Barista, a Piano and Jazz (Key Ab Ver).mp3' },
+            { name: 'フロントライン～青春の響き～', artist: 'Nijine', file: 'media/フロントライン～青春の響き～.mp3'},
+            { name: 'After You Have Gone', artist: 'Frank Sinatra, Quincy Jones', file: 'media/After You have Gone.mp3'},
+            { name: 'ギャラクティック・ファンク - Live at ABC Hall, Shiba Tokyo, Feb. 1980', artist: 'CASIOPEA', file: 'media/ギャラクティック・ファンク - Live at ABC Hall, Shiba Tokyo, Feb. 1980.mp3'}
+        ]
+        playlist.forEach(song => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${song.name} - ${song.artist}`;
+            playlistElement.appendChild(listItem);
+        });
+        ;
+
+        function changeTrack(index) {
+            currIndex = index;
     song.src = playlist[index].file;
     document.querySelector('h1').innerText = playlist[index].name;
     document.querySelector('p').innerText = playlist[index].artist;
     song.load();
 
     song.onended = function () {
+        playedIndexes.push(currIndex);
+        if (playedIndexes.length === playlist.length) {
+            allSongsPlayed = true; // Đã phát hết tất cả các bài hát
+        }
         playNext();
     };
 
     song.play();
-}
-
-function rotateImage(element) {
-element.classList.toggle("active");
-}
-
-const barsStaggered = document.querySelector('.fa-bars-staggered');
-const playlistContainer = document.querySelector('.playlist-container');
-barsStaggered.addEventListener('click', function() {
-    if (playlistContainer.style.display === 'none' || playlistContainer.style.display === '') {
-        playlistContainer.style.display = 'block';
-    } else {
-        playlistContainer.style.display = 'none';
+    if (!playedIndexes.includes(currIndex)) {
+        playedIndexes.push(currIndex);
     }
-});
-// Hàm để bật/tắt chế độ trộn bài hát
-function toggleShuffle() {
-    const shuffleIcons = document.querySelectorAll('.fa-shuffle');
-
-    if (isShuffleOn) {
-        isShuffleOn = false;
-        shuffleIcons.forEach(icon => {
-            icon.style.color = '#97a0af';
-        });
-    } else {
-        isShuffleOn = true;
-        shuffleIcons.forEach(icon => {
-            icon.style.color = '#000000'; // Màu tùy chỉnh khi bật trộn bài
-        });
-    }
-}
-// Gán hàm toggleShuffle cho sự kiện click của nút trộn bài hát
-const shuffleButton = document.querySelector('.fa-shuffle');
-shuffleButton.addEventListener('click', toggleShuffle);
-// Hàm thực hiện chuyển bài hát tiếp theo
-function playNext() {
-    let newIndex;
-    if (isShuffleOn) {
-        newIndex = Math.floor(Math.random() * playlist.length); // Lấy một bài hát ngẫu nhiên từ playlist
-    } else {
-        newIndex = (currIndex + 1) % playlist.length; // Chuyển sang bài hát tiếp theo trong playlist
-    }
-    changeTrack(newIndex);
-}
-// Hàm thực hiện chuyển bài hát trước đó
-function playPrevious() {
-    let newIndex;
-    if (isShuffleOn) {
-        newIndex = Math.floor(Math.random() * playlist.length); // Lấy một bài hát ngẫu nhiên từ playlist
-    } else {
-        newIndex = (currIndex - 1 + playlist.length) % playlist.length; // Chuyển sang bài hát trước đó trong playlist
-    }
-    changeTrack(newIndex);
-}
-document.addEventListener("DOMContentLoaded", function() {
-    const playlistElement = document.querySelector('.playlist');
-    const playlistTitle = document.querySelector('.playlist-title');
-    const listicon = document.querySelector('.fa-bars-staggered');
-    // Kiểm tra nếu playlist chưa được in ra trước đó
-    if (isPlaylistRendered) {
-        // Thêm các phần tử playlist vào DOM nếu playlist trống
-        if (playlistElement.children.length === 0) {
-            playlist.forEach(song => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `${song.name} - ${song.artist}`;
-                playlistElement.appendChild(listItem);
-            });
-            
         }
-        // Đặt cờ cho biết playlist đã được in ra
-        isPlaylistRendered = false;
+
+        function rotateImage(element) {
+            element.classList.toggle("active");
+        }
+
+        const barsStaggered = document.querySelector('.fa-bars-staggered');
+        const playlistContainer = document.querySelector('.playlist-container');
+        barsStaggered.addEventListener('click', function () {
+            if (playlistContainer.style.display === 'none' || playlistContainer.style.display === '') {
+                playlistContainer.style.display = 'block';
+            } else {
+                playlistContainer.style.display = 'none';
+            }
+        });
+        // Hàm để bật/tắt chế độ trộn bài hát
+        function toggleShuffle() {
+            const shuffleIcons = document.querySelectorAll('.fa-shuffle');
+
+            if (isShuffleOn) {
+                isShuffleOn = false;
+                shuffleIcons.forEach(icon => {
+                    icon.style.color = '#97a0af';
+                });
+            } else {
+                isShuffleOn = true;
+                shuffleIcons.forEach(icon => {
+                    icon.style.color = '#000000'; // Màu tùy chỉnh khi bật trộn bài
+                });
+            }
+        }
+        // Gán hàm toggleShuffle cho sự kiện click của nút trộn bài hát
+        const shuffleButton = document.querySelector('.fa-shuffle');
+        shuffleButton.addEventListener('click', toggleShuffle);
+        // Hàm thực hiện chuyển bài hát tiếp theo
+        let playedIndexes = [];
+        let allSongsPlayed = false;
+        function getRandomIndex(currentIndex, playlistLength){
+            let newIndex = currentIndex;
+            while (newIndex === currentIndex || playedIndexes.includes(newIndex)) {
+                newIndex = Math.floor(Math.random() * playlistLength);
+            }
+            return newIndex;
+        }
+        function playNext() {
+            if (!allSongsPlayed) {
+        let newIndex;
+        if (isShuffleOn) {
+            newIndex = getRandomIndex(currIndex, playlist.length);
+
+        } else {
+            newIndex = (currIndex + 1) % playlist.length;
+        }
+        changeTrack(newIndex);
+    } else {
+        // Đặt lại mảng playedIndexes và bắt đầu lại từ bài hát đầu tiên
+        playedIndexes = [];
+        allSongsPlayed = false;
+        changeTrack(0);
     }
-});
+        }
+        // Hàm thực hiện chuyển bài hát trước đó
+        function playPrevious() {
+            let newIndex;
+    if (isShuffleOn) {
+        newIndex = getRandomIndex(currIndex, playlist.length);
+
+    } else {
+        newIndex = (currIndex - 1 + playlist.length) % playlist.length;
+    }
+    changeTrack(newIndex);
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            const playlistElement = document.querySelector('.playlist');
+            const playlistTitle = document.querySelector('.playlist-title');
+            const listicon = document.querySelector('.fa-bars-staggered');
+            // Kiểm tra nếu playlist chưa được in ra trước đó
+            if (isPlaylistRendered) {
+                // Thêm các phần tử playlist vào DOM nếu playlist trống
+                if (playlistElement.children.length === 0) {
+                    playlist.forEach(song => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${song.name} - ${song.artist}`;
+                        playlistElement.appendChild(listItem);
+                    });
+
+                }
+                // Đặt cờ cho biết playlist đã được in ra
+                isPlaylistRendered = false;
+            }
+        });
     </script>
-    </body>
+</body>
+
 </html>
